@@ -8,10 +8,10 @@ Chief Delphi, called SWERVE DRIVE, dated 3/28/2011, by "Ether"
 public class Main {
     public static void main(String[] args) {
         
-        Joystick.forwardAxis = 0.0;
-        Joystick.strafeAxis = 0.0;
-        Joystick.rotationAxis = 0.5;
-        double gyroAngle = 0.0;
+        Joystick.forwardAxis = -0.5;
+        Joystick.strafeAxis = -0.5;
+        Joystick.rotationAxis = 0.0;
+        double gyroAngle = 0.0;     // gyro angle gives in degrees, internally converted to radians in Swerve class
         double maxWheelSpeed;
         
         Swerve swerve = new Swerve(Joystick.forwardAxis, Joystick.strafeAxis, Joystick.rotationAxis, gyroAngle);
