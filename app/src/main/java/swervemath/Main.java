@@ -8,10 +8,11 @@ Chief Delphi, called SWERVE DRIVE, dated 3/28/2011, by "Ether"
 public class Main {
     public static void main(String[] args) {
         
-        Joystick.forwardAxis = 1.0;
-        Joystick.strafeAxis = 1.0;
-        Joystick.rotationAxis = 0.0;
+        Joystick.forwardAxis = 0.0;
+        Joystick.strafeAxis = 0.0;
+        Joystick.rotationAxis = 0.5;
         double gyroAngle = 0.0;
+        double maxWheelSpeed;
         
         Swerve swerve = new Swerve(Joystick.forwardAxis, Joystick.strafeAxis, Joystick.rotationAxis, gyroAngle);
 
@@ -32,6 +33,17 @@ public class Main {
 
         rearRightWheel.speed = swerve.getWheelSpeed(Constants.Wheel.REARRIGHT);
         rearRightWheel.angle = swerve.getWheelAngle(Constants.Wheel.REARRIGHT);
+
+        // Get the maximum of the wheel speeds
+        maxWheelSpeed = swerve.getMaxWheelSpeed(frontLeftWheel.speed, frontRightWheel.speed, rearLeftWheel.speed, rearRightWheel.speed);
+        
+        if(maxWheelSpeed > 1.0) {
+            // If maximum > 1.0, normalize wheel speeds
+            frontLeftWheel.speed  = swerve.normalize(frontLeftWheel.speed, maxWheelSpeed);
+            frontRightWheel.speed  = swerve.normalize(frontRightWheel.speed, maxWheelSpeed);
+            rearLeftWheel.speed = swerve.normalize(rearLeftWheel.speed, maxWheelSpeed);
+            rearRightWheel.speed = swerve.normalize(rearRightWheel.speed, maxWheelSpeed);
+        }
 
         System.out.println("Front left wheel speed: " + frontLeftWheel.speed);
         System.out.println("Front left wheel angle: " + frontLeftWheel.angle);
